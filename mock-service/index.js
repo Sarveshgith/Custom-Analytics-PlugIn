@@ -37,6 +37,36 @@ app.get('/s/:slug', async (req, res) => {
     }
 });
 
+app.get('/analytics/:slug', async (req, res) => {
+    try {
+        const { slug } = req.params;
+
+        const response = await axios.get(`http://localhost:3000/analytics/${slug}`);
+
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.error('Error fetching analytics:', error);
+        if (error.response) {
+            return res.status(error.response.status).json(error.response.data);
+        }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+app.get('/analytics', async (req, res) => {
+    try {
+        const response = await axios.get('http://localhost:3000/analytics');
+
+        res.status(200).json(response.data);
+    } catch (error) {
+        console.error('Error fetching overview analytics:', error);
+        if (error.response) {
+            return res.status(error.response.status).json(error.response.data);
+        }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 app.listen(4000, () => {
     console.log('Mock service is running on port 4000');
 })
