@@ -1,0 +1,22 @@
+ARCHITECTURE DIAGRAM
+
++-----------+      GET /route       +--------------------+      POST /track       +----------------------------+
+|  Browser  | ───────────────────▶  |  Any Service (A-Z)  | ────────────────────▶ |   Analytics Microservice    |
+|  Client   |                      | (ImageHost, Blog,   |                      |   (Logs requests centrally) |
+|           |                      |  FoodApp, etc.)     |                      +-------------┬----------------+
++-----------+                      +---------------------+                                    │
+                                                                                              │
+                                                                                              ▼
+                                                                                     +------------------+
+                                                                                     |   PostgreSQL DB  |
+                                                                                     | (click metadata) |
+                                                                                     +------------------+
+                                                                                              │
+                                                                                              ▼
+                                                            GET /analytics or /analytics/:slug for reports
+                                                                                              │
+                                                                                              ▼
+                                                                                   +---------------------------+
+                                                                                   |   Analytics Summary API   |
+                                                                                   | (views, devices, country) |
+                                                                                   +---------------------------+
