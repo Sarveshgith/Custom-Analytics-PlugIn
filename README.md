@@ -4,7 +4,7 @@ A plug-and-play analytics microservice designed to **log, track, and analyze GET
 
 ---
 
-## ✅ Features
+##  Features
 
 * 🌐 Works with **any GET endpoint** — just send a tracking payload
 * 📍 Captures IP, user-agent, referer, device, browser, OS, and geo-location
@@ -18,17 +18,25 @@ A plug-and-play analytics microservice designed to **log, track, and analyze GET
 ## 🧱 Architecture
 
 ```text
-+-------------+           +---------------------------+           +----------------------+
-|   Client    |  GET      |    Your Main Service      |  POST     |  Analytics Service   |
-| (Browser)   +──────────▶|  (/products, /home, etc.) +──────────▶|  /track              |
-+-------------+           +---------------------------+           +----------------------+
-                               │                                          │
-                               └── Logs IP, UA, referer, etc.            ▼
-                                                                  MongoDB / PostgreSQL
-                                                                          │
-                     +-------------------------------------------+--------+
-                     |     /analytics/:slug                      |        |
-                     |     /analytics                            ▼        ▼
-                     |   Returns insights: views, visitors,  top devices, countries
-                     +-------------------------------------------+
++-----------+      GET /route       +--------------------+      POST /track       +----------------------------+
+|  Browser  | ───────────────────▶  |  Any Service (A-Z)  | ────────────────────▶ |   Analytics Microservice    |
+|  Client   |                      | (ImageHost, Blog,   |                      |   (Logs requests centrally) |
+|           |                      |  FoodApp, etc.)     |                      +-------------┬----------------+
++-----------+                      +---------------------+                                    │
+                                                                                              │
+                                                                                              ▼
+                                                                                     +------------------+
+                                                                                     |   PostgreSQL DB  |
+                                                                                     | (click metadata) |
+                                                                                     +------------------+
+                                                                                              │
+                                                                                              ▼
+                                                            GET /analytics or /analytics/:slug for reports
+                                                                                              │
+                                                                                              ▼
+                                                                                   +---------------------------+
+                                                                                   |   Analytics Summary API   |
+                                                                                   | (views, devices, country) |
+                                                                                   +---------------------------+
+
 ```
