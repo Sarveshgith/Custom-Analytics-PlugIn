@@ -36,14 +36,9 @@ const LogModel = sequelize.define('Url', {
         allowNull: true,
     },
     location: {
-        city: {
-            type: Datatypes.STRING,
-            allowNull: true,
-        },
-        country: {
-            type: Datatypes.STRING,
-            allowNull: true,
-        },
+        type: Datatypes.JSON,
+        allowNull: true,
+        defaultValue: {}
     }
 });
 

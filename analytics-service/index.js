@@ -4,6 +4,7 @@ const { syncDB, sequelize } = require('./config/database');
 const { parseUserAgent } = require('./utils/uaParser');
 const { findLocation } = require('./utils/locationFinder');
 const app = express();
+require('dotenv').config();
 app.use(express.json());
 
 syncDB();
